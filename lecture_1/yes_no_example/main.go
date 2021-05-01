@@ -5,10 +5,12 @@ import (
 	"log"
 	"time"
 
+	// NOTE - last element of the path is the package name
 	"github.com/pkg/errors"
 	"github.com/sethgrid/pester"
 )
 
+// NOTE - inferred `string` type
 const yesNoURL = "http://yesno.wtf/api"
 
 func linearBackoff(retry int) time.Duration {
@@ -16,9 +18,12 @@ func linearBackoff(retry int) time.Duration {
 }
 
 func main() {
+	// NOTE - public/private is resolved via capitalisation
+	// NOTE - `:=` vs `=` assignment
 	httpClient := pester.New()
 	httpClient.Backoff = linearBackoff
 
+	// NOTE - error handling
 	httpResponse, err := httpClient.Get(yesNoURL)
 	if err != nil {
 		log.Fatal(
@@ -33,5 +38,6 @@ func main() {
 		)
 	}
 
+	// NOTE - the `%v` verb
 	log.Printf("Response from yesno: %v", string(bodyContent))
 }
