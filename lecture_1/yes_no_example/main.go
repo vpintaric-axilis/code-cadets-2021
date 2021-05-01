@@ -23,6 +23,7 @@ func main() {
 	httpClient := pester.New()
 	httpClient.Backoff = linearBackoff
 
+	// NOTE - there are 2 values returned
 	// NOTE - error handling
 	httpResponse, err := httpClient.Get(yesNoURL)
 	if err != nil {
@@ -39,5 +40,6 @@ func main() {
 	}
 
 	// NOTE - the `%v` verb
+	// NOTE - type conversion `[]byte` to `string`
 	log.Printf("Response from yesno: %v", string(bodyContent))
 }
