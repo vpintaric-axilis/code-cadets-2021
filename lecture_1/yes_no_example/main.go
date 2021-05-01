@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"log"
 	"time"
@@ -10,6 +11,13 @@ import (
 	"github.com/sethgrid/pester"
 )
 
+// NOTE - public/private is resolved via capitalisation
+type yesNoResponse struct {
+	Answer string
+	Forced bool
+	Image  string
+}
+
 // NOTE - inferred `string` type
 const yesNoURL = "http://yesno.wtf/api"
 
@@ -18,7 +26,6 @@ func linearBackoff(retry int) time.Duration {
 }
 
 func main() {
-	// NOTE - public/private is resolved via capitalisation
 	// NOTE - `:=` vs `=` assignment
 	httpClient := pester.New()
 	httpClient.Backoff = linearBackoff
@@ -39,7 +46,16 @@ func main() {
 		)
 	}
 
+	// NOTE - default initial values
+	var decodedContent yesNoResponse
+	err = json.Unmarshal(bodyContent, &decodedContent)
+	if err != nil {
+		log.Fatal(
+			errors.WithMessage(err, "unmarshalling the JSON body content"),
+		)
+	}
+
 	// NOTE - the `%v` verb
 	// NOTE - type conversion `[]byte` to `string`
-	log.Printf("Response from yesno: %v", string(bodyContent))
+	log.Printf("Response from yesno: %v", decodedContent)
 }
