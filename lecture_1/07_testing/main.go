@@ -1,6 +1,11 @@
 package main
 
-import "flag"
+import (
+	"flag"
+	"log"
+
+	"code-cadets-2021/lecture_1/07_testing/filter"
+)
 
 func main() {
 	var countFrom, countTo, divisor int
@@ -9,5 +14,10 @@ func main() {
 	flag.IntVar(&countTo, "count-to", 10, "Value (inclusive) to count to")
 	flag.IntVar(&divisor, "divisor", 1, "The divisor used for filtering")
 
+	numbers, err := filter.GetDivisibleFromRange(countFrom, countTo, divisor)
+	if err != nil {
+		log.Fatal(err)
+	}
 
+	log.Printf("%v", numbers)
 }
