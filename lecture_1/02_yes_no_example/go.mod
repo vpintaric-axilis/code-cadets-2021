@@ -1,4 +1,4 @@
-module yesno
+module code-cadets-2021/lecture_1/02_yes_no_example
 
 go 1.15
 
