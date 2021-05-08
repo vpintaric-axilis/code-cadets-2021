@@ -15,7 +15,7 @@ func main() {
 	flag.IntVar(&divisor, "divisor", 1, "The divisor used for filtering")
 
 	numbers, err := filter.GetDivisibleFromRange(countFrom, countTo, divisor)
-	if err != nil {
+	if err != nil {w
 		log.Fatal(err)
 	}
 
